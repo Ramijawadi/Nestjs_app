@@ -1,16 +1,16 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { retry } from 'rxjs';
 
 @Controller('users')
 export class UsersController {
 
- /*GET users/*/
+ /*GET users/  GET users?role=value/*/
    /*GET users/:id*/
     /*POST users/*/
      /*PATCH users/:id*/
 
    @Get() 
-   findAll () {
+   findAll (@Query('role') role?: 'INTERN' |'ENGINEER' |'ADMIN') {
    return []
 
    }  
