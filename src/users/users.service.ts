@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { retry } from 'rxjs';
+import { CreateUserDto } from 'src/dto/create-user.dto';
+import { UpdateUserDto } from 'src/dto/updated-user.dto';
 
 @Injectable()
 export class UsersService {
 private users = [
     {
-        id: 1,
+        id: 1, 
         name: "John Doe",
         email: "john@example.com",
         role: "INTERN"
@@ -27,7 +28,7 @@ private users = [
      findAll(role?: 'INTERN' | 'ENGINEER' | 'ADMIN'){
         
      if(role) {
-        return this.users.filter(user => user.role ===role);
+        return this.users.filter(user => user.role === role);
      }
      return this.users;
      }
@@ -41,16 +42,13 @@ private users = [
         return user
     }
   
-    create( user : {name : string , email:string , role : 'INTERN' | 'ENGINEER' | 'ADMIN'}){
+    create(createUserDto: CreateUserDto){
 
         const userHeightid = [...this.users].sort((a,b) => b.id - a.id)
 
-        console.log(userHeightid)
-
-        const newUser = {
-
+         const newUser = {
             id:userHeightid[0].id +1,
-            ...user
+            ...createUserDto
         }
 
         this.users.push(newUser)
@@ -59,11 +57,11 @@ private users = [
 
     }
 
-    update(id: number , updatedUser :{name? : string , email?:string , role? : 'INTERN' | 'ENGINEER' | 'ADMIN'} ){
+    update(id: number , updateUserDto :UpdateUserDto){
        this.users = this.users.map(user => {
      if(user.id === id) {
 
-      return {...user , ...updatedUser}
+      return {...user , ...updateUserDto}
 
      }
      return user
